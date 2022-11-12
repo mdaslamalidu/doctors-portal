@@ -1,8 +1,10 @@
 import React from "react";
 import Condition from "../../Conditions/Condition";
+import Contact from "../../Contact/Contact";
 import InfoCarts from "../../InfoCarts/InfoCarts";
 import MakeApoinment from "../../MakeApoinment/MakeApoinment";
 import Services from "../../Services/Services";
+import Testimonials from "../../Testimonials/Testimonials";
 import Banner from "../Banner/Banner";
 
 const Home = () => {
@@ -13,6 +15,8 @@ const Home = () => {
       <Services></Services>
       <Condition></Condition>
       <MakeApoinment></MakeApoinment>
+      <Testimonials></Testimonials>
+      <Contact></Contact>
     </div>
   );
 };
