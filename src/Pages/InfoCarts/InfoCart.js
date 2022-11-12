@@ -5,7 +5,7 @@ const InfoCart = ({ info }) => {
   return (
     <div>
       <div
-        className={`"card flex flex-row md:flex-col justify-between items-center px-5 py-6 rounded text-white" ${bgColor}`}
+        className={`"card flex flex-col md:flex-row justify-between items-center px-5 py-6 rounded text-white" ${bgColor}`}
       >
         <figure>
           <img src={bgImage} className="w-full" alt="Movie" />
