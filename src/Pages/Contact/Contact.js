@@ -5,7 +5,7 @@ const Contact = () => {
   return (
     <div
       style={{ backgroundImage: `url(${appoinment})` }}
-      className="py-16 my-24"
+      className="py-16 mt-24"
     >
       <div className="w-[230px] lg:w-[280px] mx-auto text-center">
         <h2 className="text-lg text-primary font-bold">Contact Us</h2>
