@@ -1,5 +1,7 @@
 import React from "react";
+import Condition from "../../Conditions/Condition";
 import InfoCarts from "../../InfoCarts/InfoCarts";
+import MakeApoinment from "../../MakeApoinment/MakeApoinment";
 import Services from "../../Services/Services";
 import Banner from "../Banner/Banner";
 
@@ -9,6 +11,8 @@ const Home = () => {
       <Banner></Banner>
       <InfoCarts></InfoCarts>
       <Services></Services>
+      <Condition></Condition>
+      <MakeApoinment></MakeApoinment>
     </div>
   );
 };
