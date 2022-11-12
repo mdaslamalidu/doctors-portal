@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <div>
       <div
-        className="hero py-6 md:py-24"
+        className="hero py-5 md:pt-[110px] md:pb-[150px]"
         style={{ backgroundImage: `url(${bgImg})` }}
       >
         <div className="hero-content flex-col lg:flex-row-reverse">
