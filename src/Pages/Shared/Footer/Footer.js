@@ -5,7 +5,7 @@ import footer from "../../../assets/images/footer.png";
 const Footer = () => {
   const date = new Date().getFullYear();
   return (
-    <div
+    <section
       style={{
         backgroundImage: `url(${footer})`,
         backgroundPosition: "top",
@@ -13,54 +13,56 @@ const Footer = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <footer className="footer p-10 bg-neutral text-neutral-content">
-        <div>
-          <span className="footer-title">Services</span>
-          <Link to="/" className="link link-hover">
-            Branding
-          </Link>
-          <Link to="/" className="link link-hover">
-            Design
-          </Link>
-          <Link to="/" className="link link-hover">
-            Marketing
-          </Link>
-          <Link to="/" className="link link-hover">
-            Advertisement
-          </Link>
+      <div>
+        <footer className="footer p-10 bg-neutral text-neutral-content">
+          <div>
+            <span className="footer-title">Services</span>
+            <Link to="/" className="link link-hover">
+              Branding
+            </Link>
+            <Link to="/" className="link link-hover">
+              Design
+            </Link>
+            <Link to="/" className="link link-hover">
+              Marketing
+            </Link>
+            <Link to="/" className="link link-hover">
+              Advertisement
+            </Link>
+          </div>
+          <div>
+            <span className="footer-title">Company</span>
+            <Link to="/" className="link link-hover">
+              About us
+            </Link>
+            <Link to="/" className="link link-hover">
+              Contact
+            </Link>
+            <Link to="/" className="link link-hover">
+              Jobs
+            </Link>
+            <Link to="/" className="link link-hover">
+              Press kit
+            </Link>
+          </div>
+          <div>
+            <span className="footer-title">Legal</span>
+            <Link to="/" className="link link-hover">
+              Terms of use
+            </Link>
+            <Link to="/" className="link link-hover">
+              Privacy policy
+            </Link>
+            <Link to="/" className="link link-hover">
+              Cookie policy
+            </Link>
+          </div>
+        </footer>
+        <div className="text-center my-7">
+          <p>Copyright {date} All Rights Reserved</p>
         </div>
-        <div>
-          <span className="footer-title">Company</span>
-          <Link to="/" className="link link-hover">
-            About us
-          </Link>
-          <Link to="/" className="link link-hover">
-            Contact
-          </Link>
-          <Link to="/" className="link link-hover">
-            Jobs
-          </Link>
-          <Link to="/" className="link link-hover">
-            Press kit
-          </Link>
-        </div>
-        <div>
-          <span className="footer-title">Legal</span>
-          <Link to="/" className="link link-hover">
-            Terms of use
-          </Link>
-          <Link to="/" className="link link-hover">
-            Privacy policy
-          </Link>
-          <Link to="/" className="link link-hover">
-            Cookie policy
-          </Link>
-        </div>
-      </footer>
-      <div className="text-center my-7">
-        <p>Copyright {date} All Rights Reserved</p>
       </div>
-    </div>
+    </section>
   );
 };
 
