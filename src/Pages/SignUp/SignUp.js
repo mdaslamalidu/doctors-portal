@@ -1,28 +1,49 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const handleLogin = (data) => {
+  const handleSignIn = (data) => {
     console.log(data);
   };
   return (
     <div className="flex justify-center items-center">
       <div className="w-96 p-7">
-        <h2>This is Login</h2>
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <h2 className="text-xl text-center">SignUp</h2>
+        <form onSubmit={handleSubmit(handleSignIn)}>
+          <div className="form-control w-full my-2">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>{" "}
+            <input
+              className="input input-bordered w-full"
+              {...register("name", {
+                required: "Enter Your Name",
+              })}
+              type="text"
+              placeholder="Name"
+            />
+            {errors.name && (
+              <p className="text-red-600" role="alert">
+                {errors.name?.message}
+              </p>
+            )}
+          </div>
           <div className="form-control w-full my-2">
             <label className="label">
               <span className="label-text">Email</span>
             </label>{" "}
             <input
               className="input input-bordered w-full"
+              {...register("email", {
+                required: "Enter Email Address",
+              })}
               type="email"
-              {...register("email", { required: "Email Address is required" })}
               placeholder="Email"
             />
             {errors.email && (
@@ -37,14 +58,14 @@ const Login = () => {
             </label>{" "}
             <input
               className="input input-bordered w-full"
-              type="password"
               {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "password must be 6 charecter",
+                required: "Enter a Valid Password",
+                pattern: {
+                  value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9]).{8}/,
+                  message: "Password Must be Strong",
                 },
               })}
+              type="password"
               placeholder="Password"
             />
             {errors.password && (
@@ -57,12 +78,16 @@ const Login = () => {
             </label>
           </div>
 
-          <input type="submit" className="btn btn-accent w-full my-2" />
+          <input
+            type="submit"
+            value="Sign Up"
+            className="btn btn-accent w-full my-2"
+          />
         </form>
         <p>
-          New to Doctors Portal?
-          <Link className="text-primary" to="/register">
-            Create New Account
+          Already Have an account?
+          <Link className="text-primary" to="/login">
+            Log In
           </Link>
         </p>
         <div className="divider">OR</div>
@@ -74,4 +99,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
