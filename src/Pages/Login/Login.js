@@ -74,7 +74,6 @@ const Login = () => {
               <span className="label-text">Forget Password?</span>
             </label>
           </div>
-          <h2>Hello</h2>
           <input type="submit" className="btn btn-accent w-full my-2" />
         </form>
         <div>
