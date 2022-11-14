@@ -1,14 +1,32 @@
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const { signIn } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState("");
   const handleLogin = (data) => {
+    setLoginError("");
     console.log(data);
+    signIn(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoginError(error.message);
+      });
   };
   return (
     <div className="flex justify-center items-center">
@@ -59,6 +77,9 @@ const Login = () => {
 
           <input type="submit" className="btn btn-accent w-full my-2" />
         </form>
+        <div>
+          <p className="text-red-600">{loginError}</p>
+        </div>
         <p>
           New to Doctors Portal?
           <Link className="text-primary" to="/register">

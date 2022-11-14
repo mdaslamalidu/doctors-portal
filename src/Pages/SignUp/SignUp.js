@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const SignUp = () => {
+  const [signError, setSignupError] = useState("");
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const { createUser, updateUser } = useContext(AuthContext);
   const handleSignIn = (data) => {
+    setSignupError("");
     console.log(data);
+    createUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        updateUser(data.name)
+          .then(() => {
+            alert("update profile");
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => {
+        console.log(error);
+        setSignupError(error.message);
+      });
   };
   return (
     <div className="flex justify-center items-center">
@@ -62,7 +80,8 @@ const SignUp = () => {
                 required: "Enter a Valid Password",
                 pattern: {
                   value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9]).{8}/,
-                  message: "Password Must be Strong",
+                  message:
+                    "Password Must be uppercase, number and special charecter",
                 },
               })}
               type="password"
@@ -84,6 +103,7 @@ const SignUp = () => {
             className="btn btn-accent w-full my-2"
           />
         </form>
+        {signError && <p className="text-red-600">{signError}</p>}
         <p>
           Already Have an account?
           <Link className="text-primary" to="/login">
