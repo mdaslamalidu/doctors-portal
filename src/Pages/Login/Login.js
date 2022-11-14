@@ -83,7 +83,7 @@ const Login = () => {
         <p>
           New to Doctors Portal?
           <Link className="text-primary" to="/register">
-            Create New Account
+            Create an Account
           </Link>
         </p>
         <div className="divider">OR</div>
