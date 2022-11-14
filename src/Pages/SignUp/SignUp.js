@@ -111,8 +111,8 @@ const SignUp = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">
-          COUNTINUE WITH GOOGLE
+        <button className="btn btn-outline w-full uppercase">
+          continue with google
         </button>
       </div>
     </div>
