@@ -17,7 +17,6 @@ const Login = () => {
   const { signIn, forgetPassword, signinwithgoogle } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const email = watch("email");
-  console.log(email);
 
   const handleLogin = (data) => {
     setLoginError("");
