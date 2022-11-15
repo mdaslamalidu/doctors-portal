@@ -9,8 +9,9 @@ const SignUp = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, signinwithgoogle } = useContext(AuthContext);
   const handleSignIn = (data) => {
     setSignupError("");
     console.log(data);
@@ -18,6 +19,7 @@ const SignUp = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        reset();
         updateUser(data.name)
           .then(() => {
             alert("update profile");
@@ -29,6 +31,15 @@ const SignUp = () => {
         setSignupError(error.message);
       });
   };
+
+    const handleGoogleSignIn = () => {
+      signinwithgoogle()
+        .then(() => {
+          alert("sign in with google");
+        })
+        .catch((error) => console.log(error));
+    };
+
   return (
     <div className="flex justify-center items-center">
       <div className="w-96 p-7">
@@ -92,9 +103,6 @@ const SignUp = () => {
                 {errors.password?.message}
               </p>
             )}
-            <label className="label">
-              <span className="label-text">Forget Password?</span>
-            </label>
           </div>
 
           <input
@@ -111,7 +119,7 @@ const SignUp = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full uppercase">
+        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full uppercase">
           continue with google
         </button>
       </div>

@@ -11,16 +11,21 @@ const Login = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
+    watch,
   } = useForm();
-  const { signIn } = useContext(AuthContext);
+  const { signIn, forgetPassword, signinwithgoogle } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
+  const email = watch("email");
+  console.log(email);
+
   const handleLogin = (data) => {
     setLoginError("");
-    console.log(data);
     signIn(data.email, data.password)
       .then((result) => {
         const user = result.user;
         console.log(user);
+        reset();
         navigate(from, { replace: true });
       })
       .catch((error) => {
@@ -28,6 +33,24 @@ const Login = () => {
         setLoginError(error.message);
       });
   };
+
+  const handleResetPassword = () => {
+    console.log(email);
+    forgetPassword(email)
+      .then(() => alert("check your email"))
+      .catch((err) => {
+        setLoginError(err.message);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    signinwithgoogle()
+      .then(() => {
+        alert("sign in with google");
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="flex justify-center items-center">
       <div className="w-96 p-7">
@@ -71,7 +94,9 @@ const Login = () => {
               </p>
             )}
             <label className="label">
-              <span className="label-text">Forget Password?</span>
+              <span onClick={handleResetPassword} className="label-text">
+                Forget Password?
+              </span>
             </label>
           </div>
           <input type="submit" className="btn btn-accent w-full my-2" />
@@ -86,7 +111,7 @@ const Login = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline w-full">
+        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">
           COUNTINUE WITH GOOGLE
         </button>
       </div>
