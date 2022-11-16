@@ -15,7 +15,7 @@ const AvailableAppoinment = ({ selected }) => {
   };
 
   useEffect(() => {
-    fetch("appointmentOptions.json")
+    fetch("http://localhost:5000/appointmentOption")
       .then((res) => res.json())
       .then((data) => setAppointmentOptions(data));
   }, []);
