@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const AppointmentModal = ({ treatment, selected, setTreatment }) => {
@@ -36,7 +37,7 @@ const AppointmentModal = ({ treatment, selected, setTreatment }) => {
       .then((data) => {
         console.log(data);
         if (data.acknowledged) {
-          alert("data add to server");
+          toast.success("Add data to server");
           setTreatment(null);
         }
       });

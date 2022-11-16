@@ -6,6 +6,7 @@ import AppointmentOption from "./AppointmentOption";
 
 const AvailableAppoinment = ({ selected }) => {
   const [treatment, setTreatment] = useState(null);
+  const date = format(selected, "PP");
 
   const handleModal = (id) => {
     const singleModal = appointmentOptions.find(
@@ -15,9 +16,11 @@ const AvailableAppoinment = ({ selected }) => {
   };
 
   const { data: appointmentOptions = [] } = useQuery({
-    queryKey: ["appointmentOptions"],
+    queryKey: ["appointmentOptions", date],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/appointmentOption");
+      const res = await fetch(
+        `http://localhost:5000/appointmentOption?date=${date}`
+      );
       const data = await res.json();
       return data;
     },
