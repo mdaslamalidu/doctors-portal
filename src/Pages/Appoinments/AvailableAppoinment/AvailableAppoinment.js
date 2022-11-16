@@ -1,10 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import AppointmentOption from "./AppointmentOption";
 
 const AvailableAppoinment = ({ selected }) => {
-  const [appointmentOptions, setAppointmentOptions] = useState([]);
   const [treatment, setTreatment] = useState(null);
 
   const handleModal = (id) => {
@@ -14,11 +14,14 @@ const AvailableAppoinment = ({ selected }) => {
     setTreatment(singleModal);
   };
 
-  useEffect(() => {
-    fetch("http://localhost:5000/appointmentOption")
-      .then((res) => res.json())
-      .then((data) => setAppointmentOptions(data));
-  }, []);
+  const { data: appointmentOptions = [] } = useQuery({
+    queryKey: ["appointmentOptions"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/appointmentOption");
+      const data = await res.json();
+      return data;
+    },
+  });
 
   return (
     <section className="-mt-14 pb-16">
