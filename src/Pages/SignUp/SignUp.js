@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 const SignUp = () => {
   const [signError, setSignupError] = useState("");
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -23,6 +24,7 @@ const SignUp = () => {
         updateUser(data.name)
           .then(() => {
             alert("update profile");
+            navigate("/");
           })
           .catch((error) => console.log(error));
       })
@@ -32,13 +34,13 @@ const SignUp = () => {
       });
   };
 
-    const handleGoogleSignIn = () => {
-      signinwithgoogle()
-        .then(() => {
-          alert("sign in with google");
-        })
-        .catch((error) => console.log(error));
-    };
+  const handleGoogleSignIn = () => {
+    signinwithgoogle()
+      .then(() => {
+        alert("sign in with google");
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="flex justify-center items-center">
@@ -119,7 +121,10 @@ const SignUp = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button onClick={handleGoogleSignIn} className="btn btn-outline w-full uppercase">
+        <button
+          onClick={handleGoogleSignIn}
+          className="btn btn-outline w-full uppercase"
+        >
           continue with google
         </button>
       </div>
