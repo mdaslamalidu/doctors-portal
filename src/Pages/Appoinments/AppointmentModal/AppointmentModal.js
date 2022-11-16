@@ -15,17 +15,31 @@ const AppointmentModal = ({ treatment, selected, setTreatment }) => {
     const email = form.email.value;
     const phone = form.phone.value;
 
-    setTreatment(null);
-
     const appointmentData = {
       appointmentDate: date,
-      pateintName: daises,
+      treatmentName: daises,
       name,
       email,
       phone,
       slot,
     };
     console.log(appointmentData);
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(appointmentData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          alert("data add to server");
+          setTreatment(null);
+        }
+      });
   };
 
   return (
