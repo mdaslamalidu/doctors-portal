@@ -40,6 +40,8 @@ const AppointmentModal = ({ treatment, selected, setTreatment, refetch }) => {
           setTreatment(null);
           toast.success("Add data to server");
           refetch();
+        } else {
+          toast.error(data.message);
         }
       });
   };
