@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import useToken from "../../hooks/useToken";
 
 const SignUp = () => {
   const [signError, setSignupError] = useState("");
@@ -14,6 +15,14 @@ const SignUp = () => {
     reset,
   } = useForm();
   const { createUser, updateUser, signinwithgoogle } = useContext(AuthContext);
+
+  const [createdUserToken, setCreatedUserToken] = useState("");
+  const [token] = useToken(createdUserToken);
+
+  if (token) {
+    navigate("/");
+  }
+
   const handleSignIn = (data) => {
     setSignupError("");
     console.log(data);
@@ -51,7 +60,7 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        getToken(email);
+        setCreatedUserToken(email);
       });
   };
 
@@ -61,15 +70,6 @@ const SignUp = () => {
         alert("sign in with google");
       })
       .catch((error) => console.log(error));
-  };
-
-  const getToken = (email) => {
-    fetch(`http://localhost:5000/jwt?email=${email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem("accessToken", data.accessToken);
-        navigate("/");
-      });
   };
 
   return (
