@@ -51,7 +51,7 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        navigate("/");
+        getToken(email);
       });
   };
 
@@ -61,6 +61,15 @@ const SignUp = () => {
         alert("sign in with google");
       })
       .catch((error) => console.log(error));
+  };
+
+  const getToken = (email) => {
+    fetch(`http://localhost:5000/jwt?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem("accessToken", data.accessToken);
+        navigate("/");
+      });
   };
 
   return (
