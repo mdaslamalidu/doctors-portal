@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
@@ -23,14 +24,34 @@ const SignUp = () => {
         reset();
         updateUser(data.name)
           .then(() => {
-            alert("update profile");
-            navigate("/");
+            toast.success("update profile");
+            saveuserToDb(data.name, data.email);
           })
           .catch((error) => console.log(error));
       })
       .catch((error) => {
         console.log(error);
         setSignupError(error.message);
+      });
+  };
+
+  const saveuserToDb = (name, email) => {
+    const currentUser = {
+      name,
+      email,
+    };
+
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(currentUser),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        navigate("/");
       });
   };
 
