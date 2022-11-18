@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const AllUsers = () => {
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/users");
@@ -14,10 +14,14 @@ const AllUsers = () => {
   const handleAdmin = (id) => {
     fetch(`http://localhost:5000/users/admin/${id}`, {
       method: "PUT",
+      headers: {
+        authorizations: `bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        refetch();
       });
   };
 
