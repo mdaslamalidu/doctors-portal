@@ -86,6 +86,22 @@ const AddDoctor = () => {
               ))}
             </select>
           </div>
+          <div className="form-control w-full my-2">
+            <label className="label">
+              <span className="label-text">Photo</span>
+            </label>{" "}
+            <input
+              {...register("img", {
+                required: "image is required",
+              })}
+              type="file"
+            />
+            {errors.img && (
+              <p className="text-red-600" role="alert">
+                {errors.img?.message}
+              </p>
+            )}
+          </div>
           <input
             type="submit"
             value="Add A Doctor"
