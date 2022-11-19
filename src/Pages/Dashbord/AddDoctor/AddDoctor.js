@@ -2,6 +2,7 @@ import { async } from "@firebase/util";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
+import Loading from "../../Shared/Loading/Loading";
 
 const AddDoctor = () => {
   const {
@@ -24,6 +25,9 @@ const AddDoctor = () => {
     console.log(data);
   };
 
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
   return (
     <div>
       <h3>Add A Doctor</h3>
@@ -71,10 +75,10 @@ const AddDoctor = () => {
             <label className="label">
               <span className="label-text">Speciality</span>
             </label>{" "}
-            <select className="select select-ghost w-full max-w-xs">
-              <option disabled selected>
-                select the doctor name
-              </option>
+            <select
+              {...register("selectedValue")}
+              className="select input-bordered w-full max-w-xs"
+            >
               {speciaties.map((specialty) => (
                 <option key={specialty._id} value={specialty.name}>
                   {specialty.name}
