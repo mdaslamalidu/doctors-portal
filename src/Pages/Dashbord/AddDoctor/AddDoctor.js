@@ -1,3 +1,5 @@
+import { async } from "@firebase/util";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -8,6 +10,15 @@ const AddDoctor = () => {
     handleSubmit,
     reset,
   } = useForm();
+
+  const { data: speciaties, isLoading } = useQuery({
+    queryKey: ["specialty"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/appointmentSpeciality");
+      const data = await res.json();
+      return data;
+    },
+  });
 
   const handleAddDoctor = (data) => {
     console.log(data);
@@ -62,11 +73,13 @@ const AddDoctor = () => {
             </label>{" "}
             <select className="select select-ghost w-full max-w-xs">
               <option disabled selected>
-                Pick the best JS framework
+                select the doctor name
               </option>
-              <option>Svelte</option>
-              <option>Vue</option>
-              <option>React</option>
+              {speciaties.map((specialty) => (
+                <option key={specialty._id} value={specialty.name}>
+                  {specialty.name}
+                </option>
+              ))}
             </select>
           </div>
           <input
