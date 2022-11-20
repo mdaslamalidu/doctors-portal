@@ -10,6 +10,10 @@ const ManageDoctor = () => {
     return setDeleteModal(null);
   };
 
+  const handleDeleteDoctor = (doctor) => {
+    console.log(doctor);
+  };
+
   const { data: doctors, isLoading } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
@@ -75,6 +79,8 @@ const ManageDoctor = () => {
           title={`Are you want to delete the doctor`}
           message={`if you want to delete the ${deleteModal.name}`}
           closeModal={closeModal}
+          modalData={deleteModal}
+          successAction={handleDeleteDoctor}
         ></ConfirmationModal>
       )}
     </div>
