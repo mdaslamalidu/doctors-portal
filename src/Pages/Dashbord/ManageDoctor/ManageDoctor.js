@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
+import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 import Loading from "../../Shared/Loading/Loading";
 
 const ManageDoctor = () => {
+  const [deleteModal, setDeleteModal] = useState(null);
   const { data: doctors, isLoading } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
@@ -22,7 +24,7 @@ const ManageDoctor = () => {
 
   return (
     <div>
-      <h2 className="text-2xl">Manage Doctor</h2>
+      <h2 className="text-2xl mb-4">Manage Doctor</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -39,17 +41,31 @@ const ManageDoctor = () => {
             {doctors.map((doctor, index) => (
               <tr key={doctor._id}>
                 <th>{index + 1}</th>
-                <td></td>
+                <td>
+                  <div className="avatar">
+                    <div className="w-24 rounded-full">
+                      <img src={doctor.image} />
+                    </div>
+                  </div>
+                </td>
                 <td>{doctor.name}</td>
                 <td>{doctor.email}</td>
+                <td>{doctor.speciaties}</td>
                 <td>
-                  <button className="btn-error">delete</button>
+                  <label
+                    onClick={() => setDeleteModal(doctor)}
+                    htmlFor="my-modal"
+                    className="btn-error rounded px-2 py-1"
+                  >
+                    Delete
+                  </label>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {deleteModal && <ConfirmationModal></ConfirmationModal>}
     </div>
   );
 };
