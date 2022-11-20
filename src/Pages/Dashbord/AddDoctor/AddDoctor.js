@@ -12,6 +12,9 @@ const AddDoctor = () => {
     reset,
   } = useForm();
 
+  const imageKey = process.env.REACT_APP_IMAGEBB_KEY;
+  console.log(imageKey);
+
   const { data: speciaties, isLoading } = useQuery({
     queryKey: ["specialty"],
     queryFn: async () => {
@@ -22,7 +25,21 @@ const AddDoctor = () => {
   });
 
   const handleAddDoctor = (data) => {
-    console.log(data);
+    const image = data.img[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          console.log(imgData.data.url);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   if (isLoading) {
