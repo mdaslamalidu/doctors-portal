@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import Loading from "../../Shared/Loading/Loading";
 
 const ManageDoctor = () => {
-  const { data: doctors } = useQuery({
+  const { data: doctors, isLoading } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
       try {
@@ -14,6 +15,10 @@ const ManageDoctor = () => {
       }
     },
   });
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div>
