@@ -5,6 +5,11 @@ import Loading from "../../Shared/Loading/Loading";
 
 const ManageDoctor = () => {
   const [deleteModal, setDeleteModal] = useState(null);
+
+  const closeModal = () => {
+    return setDeleteModal(null);
+  };
+
   const { data: doctors, isLoading } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
@@ -65,7 +70,13 @@ const ManageDoctor = () => {
           </tbody>
         </table>
       </div>
-      {deleteModal && <ConfirmationModal></ConfirmationModal>}
+      {deleteModal && (
+        <ConfirmationModal
+          title={`Are you want to delete the doctor`}
+          message={`if you want to delete the ${deleteModal.name}`}
+          closeModal={closeModal}
+        ></ConfirmationModal>
+      )}
     </div>
   );
 };
