@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 import Loading from "../../Shared/Loading/Loading";
 
@@ -10,11 +11,11 @@ const ManageDoctor = () => {
     return setDeleteModal(null);
   };
 
-  const handleDeleteDoctor = (doctor) => {
-    console.log(doctor);
-  };
-
-  const { data: doctors, isLoading } = useQuery({
+  const {
+    data: doctors,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["doctors"],
     queryFn: async () => {
       try {
@@ -27,13 +28,29 @@ const ManageDoctor = () => {
     },
   });
 
+  const handleDeleteDoctor = (doctor) => {
+    fetch(`http://localhost:5000/doctors/${doctor._id}`, {
+      method: "DELETE",
+      headers: {
+        authorizations: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount) {
+          refetch();
+          toast.success(`successfully deleted the doctor ${doctor.name}`);
+        }
+      });
+  };
+
   if (isLoading) {
     return <Loading></Loading>;
   }
 
   return (
     <div>
-      <h2 className="text-2xl mb-4">Manage Doctor</h2>
+      <h2 className="text-2xl mb-4">Manage Doctor {doctors.length}</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -80,6 +97,7 @@ const ManageDoctor = () => {
           message={`if you want to delete the ${deleteModal.name}`}
           closeModal={closeModal}
           modalData={deleteModal}
+          successBtnName="Delete"
           successAction={handleDeleteDoctor}
         ></ConfirmationModal>
       )}
