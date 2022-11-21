@@ -19,7 +19,11 @@ const ManageDoctor = () => {
     queryKey: ["doctors"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:5000/doctors");
+        const res = await fetch("http://localhost:5000/doctors", {
+          headers: {
+            authorizations: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
         const data = await res.json();
         return data;
       } catch (error) {
@@ -50,7 +54,7 @@ const ManageDoctor = () => {
 
   return (
     <div>
-      <h2 className="text-2xl mb-4">Manage Doctor {doctors.length}</h2>
+      <h2 className="text-2xl mb-4">Manage Doctor {doctors?.length}</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -64,30 +68,31 @@ const ManageDoctor = () => {
             </tr>
           </thead>
           <tbody>
-            {doctors.map((doctor, index) => (
-              <tr key={doctor._id}>
-                <th>{index + 1}</th>
-                <td>
-                  <div className="avatar">
-                    <div className="w-24 rounded-full">
-                      <img src={doctor.image} />
+            {doctors.length &&
+              doctors.map((doctor, index) => (
+                <tr key={doctor._id}>
+                  <th>{index + 1}</th>
+                  <td>
+                    <div className="avatar">
+                      <div className="w-24 rounded-full">
+                        <img src={doctor.image} />
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{doctor.name}</td>
-                <td>{doctor.email}</td>
-                <td>{doctor.speciaties}</td>
-                <td>
-                  <label
-                    onClick={() => setDeleteModal(doctor)}
-                    htmlFor="my-modal"
-                    className="btn-error rounded px-2 py-1"
-                  >
-                    Delete
-                  </label>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>{doctor.name}</td>
+                  <td>{doctor.email}</td>
+                  <td>{doctor.speciaties}</td>
+                  <td>
+                    <label
+                      onClick={() => setDeleteModal(doctor)}
+                      htmlFor="my-modal"
+                      className="btn-error rounded px-2 py-1"
+                    >
+                      Delete
+                    </label>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
