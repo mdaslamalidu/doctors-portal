@@ -9,6 +9,7 @@ import MyAppointment from "../Pages/Dashbord/MyAppointment/MyAppointment";
 import Payment from "../Pages/Dashbord/Payment/Payment";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
+import ErrorPage from "../Pages/Shared/ErrorPage/ErrorPage";
 import SignUp from "../Pages/SignUp/SignUp";
 import AdminRoute from "./AdminRoute/AdminRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -17,6 +18,7 @@ export const routes = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -43,6 +45,7 @@ export const routes = createBrowserRouter([
         <DahsboardLayout></DahsboardLayout>
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/dashbord",
