@@ -3,6 +3,9 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 const CheckOutPage = ({ bookings }) => {
   const [clientSecret, setClientSecret] = useState("");
+  const [success, setSuccess] = useState("");
+  const [transactionId, setTransactionId] = useState("");
+  const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
@@ -43,7 +46,8 @@ const CheckOutPage = ({ bookings }) => {
     } else {
       setCardError("");
     }
-
+    setSuccess("");
+    setProcessing(true);
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -54,7 +58,18 @@ const CheckOutPage = ({ bookings }) => {
           },
         },
       });
+    if (confirmError) {
+      setCardError(confirmError.message);
+      return;
+    }
+    if (paymentIntent.status === "succeeded") {
+      setSuccess("congrets! your payment completed");
+      setTransactionId(paymentIntent.id);
+    }
+    setProcessing(false);
+    console.log(paymentIntent);
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -77,12 +92,18 @@ const CheckOutPage = ({ bookings }) => {
         <button
           type="submit"
           className="btn btn-sm btn-primary mt-4"
-          disabled={!stripe || !clientSecret}
+          disabled={!stripe || !clientSecret || processing}
         >
           Pay
         </button>
       </form>
       <p className="text-xl text-red-500">{cardError}</p>
+      {success && (
+        <div>
+          <p className="text-green-500">{success}</p>
+          <p className="font-bold">your tarnsaction id {transactionId}</p>
+        </div>
+      )}
     </div>
   );
 };
